@@ -31,7 +31,7 @@ app.get('/api/todos', (request, response) => {
   try {
     const db = readDB();
     database = db;
-    id = Math.max(...db.map(item => parseInt(item.id), 0)) + 1;
+    id = Math.max(...db.map(item => parseInt(item.id)), 0) + 1;
 
     response.json(db);
   } catch (err) {

@@ -27,7 +27,7 @@ function writeDB(data) {
 
 // endpoints
 // get all todo items
-app.get('/todo', (request, response) => {
+app.get('/api/todos', (request, response) => {
   try {
     const db = readDB();
     database = db;
@@ -39,7 +39,7 @@ app.get('/todo', (request, response) => {
   }
 });
 // add a new todo item
-app.post('/todo', (request, response) => {
+app.post('/api/todos', (request, response) => {
   try {
     const newItem = {
       id,
@@ -56,7 +56,7 @@ app.post('/todo', (request, response) => {
   }
 });
 // update todo item
-app.post('/todo/:id', (request, response) => {
+app.post('/api/todos/:id', (request, response) => {
   try {
     const id = request.params.id;
     const todoItem = database.find(todoItem => todoItem.id == id);
@@ -77,7 +77,7 @@ app.post('/todo/:id', (request, response) => {
   }
 });
 // delete todo item
-app.delete('/todo/:id', (request, response) => {
+app.delete('/api/todos/:id', (request, response) => {
   try {
     const id = parseInt(request.params.id);
     const index = database.map(todoItem => todoItem.id).indexOf(id);

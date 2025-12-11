@@ -53,6 +53,7 @@ app.get('/api/todos', async (request, response) => {
 
     response.json(db);
   } catch (err) {
+    console.error(err);
     response.status(500).json({ error: 'Could not read database' });
   }
 });
@@ -70,6 +71,7 @@ app.post('/api/todos', async (request, response) => {
 
     response.json(newItem);
   } catch (err) {
+    console.error(err);
     response.status(500).json({ error: 'Could not write database', details: err });
   }
 });
@@ -95,6 +97,7 @@ app.post('/api/todos/:id', async (request, response) => {
 
     response.json(todoItem);
   } catch (err) {
+    console.error(err);
     response.status(500).json({ error: 'Could not write database', details: err });
   }
 });
@@ -117,6 +120,7 @@ app.delete('/api/todos/:id', async (request, response) => {
 
     response.json({});
   } catch (err) {
+    console.error(err);
     response.status(500).json({ error: 'Could not write database', details: err });
   }
 });

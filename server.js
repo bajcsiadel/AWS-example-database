@@ -25,7 +25,7 @@ app.use(cors());
 async function readDB() {
   const command = new GetObjectCommand({ Bucket: S3_BUCKET_NAME, Key: DB_FILE });
   const data = await s3.send(command);
-  console.log(`File ${key} read successfully`);
+  console.log(`File ${DB_FILE} read successfully`);
   return JSON.parse(data);
 }
 
@@ -38,7 +38,7 @@ async function writeDB(data) {
   });
 
   await s3.send(command);
-  console.log(`File ${key} updated successfully`);
+  console.log(`File ${DB_FILE} updated successfully`);
 }
 
 // endpoints

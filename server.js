@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import cors from 'cors';
 import express from 'express';
-import fs from 'fs';
+import stream from 'stream';
 import {GetObjectCommand, PutObjectCommand, S3Client} from '@aws-sdk/client-s3';
 
 // Defining variables
@@ -14,6 +14,15 @@ let database;
 let id = 1;
 const s3 = new S3Client({ region: AWS_REGION });
 
+// Helper to convert stream to string
+const streamToString = async (readableStream) => {
+  const chunks = [];
+  for await (const chunk of readableStream) {
+    chunks.push(chunk);
+  }
+  return Buffer.concat(chunks).toString("utf-8");
+};
+
 // Defining server
 const app = express();
 app.use(express.json());
@@ -24,10 +33,11 @@ app.use(cors());
 // Defining functions
 async function readDB() {
   const command = new GetObjectCommand({ Bucket: S3_BUCKET_NAME, Key: DB_FILE });
-  const data = await s3.send(command);
+  const response = await s3.send(command);
   console.log(`File ${DB_FILE} read successfully`);
-  console.log(data);
-  return data;
+  const content = await streamToString(response.Body);
+  console.log(content);
+  return content;
 }
 
 async function writeDB(data) {

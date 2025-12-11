@@ -44,7 +44,7 @@ async function writeDB(data) {
   const command = new PutObjectCommand({
     Bucket: S3_BUCKET_NAME,
     Key: DB_FILE,           // same object key
-    Body: data,   // new content
+    Body: JSON.stringify(data),   // new content
     ContentType: "application/json" // or appropriate MIME type
   });
 
@@ -78,7 +78,7 @@ app.post('/api/todos', async (request, response) => {
     database.push(newItem);
     await writeDB(database);
 
-    console.log(`POST /todos ${newItem}`);
+    console.log(`POST /todos`, newItem);
 
     response.json(newItem);
   } catch (err) {
@@ -102,7 +102,7 @@ app.post('/api/todos/:id', async (request, response) => {
     todoItem.value = request.body.value;
     todoItem.selected = request.body.selected;
 
-    console.log(`PUT /todos/${id} ${todoItem}`);
+    console.log(`PUT /todos/${id}`, todoItem);
 
     await writeDB(database);
 

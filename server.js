@@ -37,7 +37,7 @@ async function readDB() {
   console.log(`File ${DB_FILE} read successfully`);
   const content = await streamToString(response.Body);
   console.log(content);
-  return content;
+  return JSON.parse(content);
 }
 
 async function writeDB(data) {
